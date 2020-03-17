@@ -15,7 +15,14 @@ app.use(bodyParser.urlencoded({
 
 app.use(express.static("public"));
 
+mongoose.connect("mongodb://localhost:27017/wikiDB", {useNewUrlParser: true, useUnifiedTopology: true});
 
+const articleSchema = {
+  title: String,
+  content: String
+};
+
+const Article = mongoose.model("Article", articleSchema);
 
 app.listen(3000, function(){
   console.log("server started at port 3000");
