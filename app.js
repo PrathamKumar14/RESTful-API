@@ -27,6 +27,8 @@ const articleSchema = {
 
 const Article = mongoose.model("Article", articleSchema);
 
+// ************* Request targetting all articles *************
+
 app.route("/articles")
 .get(function(req, res) {
   Article.find({}, function(err, foundArticles) {
@@ -56,6 +58,22 @@ app.route("/articles")
     if (!err) {
       res.send("Successfully deleted all articles");
     } else {
+      res.send(err);
+    }
+  });
+});
+
+//************* Request taregtting particular articles *************** 4
+
+app.route("/articles/:articleTitle")
+
+.get(function(req, res){
+
+  Article.findOne({title: req.params.articleTitle}, function(err, foundArticle){
+    if(foundArticle){
+      res.send(foundArticle);
+    }
+    else{
       res.send(err);
     }
   });
