@@ -68,7 +68,6 @@ app.route("/articles")
 app.route("/articles/:articleTitle")
 
 .get(function(req, res){
-
   Article.findOne({title: req.params.articleTitle}, function(err, foundArticle){
     if(foundArticle){
       res.send(foundArticle);
@@ -77,6 +76,19 @@ app.route("/articles/:articleTitle")
       res.send(err);
     }
   });
+})
+
+.put(function(req, res){
+  Article.update(
+    {title: req.params.articleTitle},
+    {title: req.body.title, content: req.body.content},
+    {overwrite: true},
+    function(err){
+      if(!err){
+        res.send("Successfully updated");
+      }
+    }
+  );
 });
 
 app.listen(3000, function() {
